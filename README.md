@@ -1,17 +1,16 @@
 # 🌋 LLaVA-Graph: Context-prompted vision-language assistant for explaining scientific graphs
 *TLDR: We re-formulate image-caption-generation problem as context-prompted 'explanation' generation problem, which alings models output given (graph, caption) to its first mentioned paragraph. Fine-tuned from LLaVa with 5X more tokens using SciCap *
 
-[[Demo](https://llava.hliu.cc/)]  [[Data](https://huggingface.co/datasets/liuhaotian/LLaVA-Instruct-150K)] [[Model](https://huggingface.co/liuhaotian/LLaVA-13b-delta-v0)]
+[[Demo](https://llava.hliu.cc/)]  [[Data](https://github.com/findalexli/LLaVA-Graph)] [[Model](https://huggingface.co/alexshengzhili/LLaVa-graph-caption-to-paragraph)]
 
 ## Main Contribution of LLaVA-Graph
 - **Caption as context, not as prediction target**. 
     One-third of captions in SciCap are single-sentence (Hsu et al.2023) Many are incomplete sentences(i.e.  "Vary number of objects') or consist of single/multple Nouns ('IIPS', 'Average Travel Time'). Efforts to predict captions from image have not been successful, despite attempts to contexualize the model (Yang, 2023). We theroized that captions are instead excellent prompts as contextting the Large Vision-Language Models. 
 - **OCR as additional context (optional)**. 
     ["On the Hidden Mystery of OCR in Large Multimodal Models"](https://arxiv.org/abs/2305.07895) shows that even most powerful large multimodal models cannot match expert OCR models by large margin. Zero-shot text recognition results ranges  37-61% compared to Supervised SOTA of 85%. This deficincy is particular detrimental to science graphs where text and their location are much more important for humans to read and understand. We added extracted text and bounding boxes when text is detected in figures as part of the contextual prompt. 
-- **Paragraph as target**. 
-    first-paragraph that mentioned the figure are significantly more informative and carry descriptive and logical explanations, which we hypothezied to aid as ground truth in instructing the LMM to assist users to understand graphs via Chat.
-- **Dataset**
-    Our training dataset is constructed using SciCap from 290K papers published on Arxiv on topic of CS and ML. Our training corpose is 5X larger than LLaVapre-training dataset (LiON-CC-590K) or 50X larger with OCR features.  
+- **Paragraph as alignment given above context**. 
+    first-paragraph that mentioned the figure are significantly more informative and carry descriptive and logical explanations, which we hypothezied to aid as ground truth in instructing the LMM to assist users to understand graphs via Chat. LLaVA-receipt has two steps: 1. (image, caption) feature alignment which is to train a vision token projector into the language token space, pretraining on filtered 590K images with short captions . 2 (image, ground truth bounding box, GPT-4 rewritten multi-turn conversation) for visual instruction tuning. We **switched the first step of feature alignment using the proposed stronger signal between (image, short academic caption, ocr extracted token) and (first mentioned paragraph)**. Our training dataset is constructed using SciCap from 290K papers published on Arxiv on topic of CS and ML. Our training corpose [[Data](https://github.com/findalexli/LLaVA-Graph)] is 5X larger than LLaVa pre-training dataset (LiON-CC-590K) 
+
 
 
 **Usage and License Notices**: The data, code and checkpoint is intended and licensed for research use only. They are also restricted to uses that follow the license agreement of LLaMA, Vicuna and GPT-4. The dataset is CC BY NC 4.0 (allowing only non-commercial use) and models trained using the dataset should not be used outside of research purposes.
@@ -33,18 +32,12 @@
 
 
 ### Pretraining Dataset
-The pretraining dataset used in this release is a subset of CC-3M dataset, filtered with a more balanced concept coverage distribution.  Please see [here](https://huggingface.co/datasets/liuhaotian/LLaVA-CC3M-Pretrain-595K) for a detailed description on the dataset structure and how to download the images.
-
-If you already have CC-3M dataset on your disk, the image names follow this format: `GCC_train_000000000.jpg`.  You may edit the `image` field correspondingly if necessary.
-
-| Data | Chat File | Meta Data | Size |
-| --- |  --- |  --- | ---: |
-| CC-3M Concept-balanced 595K | [chat.json](https://huggingface.co/datasets/liuhaotian/LLaVA-CC3M-Pretrain-595K/raw/main/chat.json) | [metadata.json](https://huggingface.co/datasets/liuhaotian/LLaVA-CC3M-Pretrain-595K/raw/main/metadata.json) | 211 MB
-| LAION/CC/SBU BLIP-Caption Concept-balanced 558K | [blip_laion_cc_sbu_558k.json](https://huggingface.co/datasets/liuhaotian/LLaVA-Pretrain/raw/main/blip_laion_cc_sbu_558k.json) | [metadata.json](#) | 181 MB
-
-**Important notice**: Upon the request from the community, as ~15% images of the original CC-3M dataset are no longer accessible, we upload [`images.zip`](https://huggingface.co/datasets/liuhaotian/LLaVA-CC3M-Pretrain-595K/blob/main/images.zip) for better reproducing our work in research community. It must not be used for any other purposes. The use of these images must comply with the CC-3M license. This may be taken down at any time when requested by the original CC-3M dataset owner or owners of the referenced images.
+The pretraining dataset used in this release is from the SciCap dataset. SCICAP is a large-scale image captioning dataset that contains real-world scientific figures and captions. SCICAP was constructed using more than two million images from over 290,000 papers collected and released by arXiv.Homepage. The papers are filtered as 2010-2020 compuer science and machine learning papers. Hsu, Giles, and Huang (2021) show that text normalizationand figure filtering do not improve model performance.
+In all three splits, around 90% of the captions are less than 66 words.Out of 2.1 million figures, Only graph figures are considered. Ohther formats such as tables, euqaitions, flowcharts, scatter plots and bar charts are not considered.  Please see here for a visualidation dataset [vis](https://huggingface.co/datasets/alexshengzhili/llava-graph-caption2mentioned-vis)
 
 
+The Scicap dataset is transformed into the following single turn conversation: Xc Xq Xv<STOP>nn Assistant : Xm<STOP>nn, 
+where Xc are context tokens (from caption and ocr-extract text), Xq is randomly selected question prompt are , Xv is image tokens, and Xm is mentioned paragraph. 
 
 ## Install
 
@@ -67,22 +60,13 @@ pip install flash-attn==1.0.2
 
 
 ## LLaVA Weights
-We release [LLaVA](https://llava-vl.github.io/) weights as delta weights to comply with the LLaMA model license.
-You can add our delta to the original LLaMA weights to obtain the LLaVA weights.
+```Shell
 
-Instructions:
+from transformers import AutoModelForCausalLM
 
-1. Get the original LLaMA weights in the huggingface format by following the instructions [here](https://huggingface.co/docs/transformers/main/model_doc/llama).
-2. Use the following scripts to get LLaVA weights by applying our delta ([13b-v0](https://huggingface.co/liuhaotian/LLaVA-13b-delta-v0), [7b-v0](https://huggingface.co/liuhaotian/LLaVA-7b-delta-v0), [lightning-7B-v1-1](https://huggingface.co/liuhaotian/LLaVA-Lightning-7B-delta-v1-1)). It will automatically download delta weights from our Hugging Face account.
-
-### LLaVA-13B
-This conversion command needs around 60 GB of CPU RAM.
-```bash
-python3 -m llava.model.apply_delta \
-    --base /path/to/llama-13b \
-    --target /output/path/to/LLaVA-13B-v0 \
-    --delta liuhaotian/LLaVA-13b-delta-v0
+model = AutoModelForCausalLM.from_pretrained("alexshengzhili/LLaVa-graph-caption-to-paragraph")
 ```
+
 
 ### LLaVA-7B
 This conversion command needs around 30 GB of CPU RAM.
@@ -110,7 +94,7 @@ python -m llava.serve.controller --host 0.0.0.0 --port 10000
 
 #### Launch a model worker
 ```Shell
-python -m llava.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40000 --worker http://localhost:40000 --model-path ./checkpoints/LLaVA-13B-v0 --multi-modal
+python -m llava.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40000 --worker http://localhost:40000 --model-path alexshengzhili/LLaVa-graph-caption-to-paragraph --multi-modal
 ```
 Wait until the process finishes loading the model and you see "Uvicorn running on ...".
 
@@ -119,7 +103,7 @@ Wait until the process finishes loading the model and you see "Uvicorn running o
 If your the VRAM of your GPU is less than 24GB (e.g., RTX 3090, RTX 4090, etc.), you may try running it with multiple GPUs.
 
 ```Shell
-python -m llava.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40000 --worker http://localhost:40000 --model-path ./checkpoints/LLaVA-13B-v0 --multi-modal --num-gpus 2
+python -m llava.serve.model_worker --host 0.0.0.0 --controller http://localhost:10000 --port 40000 --worker http://localhost:40000 --model-path alexshengzhili/LLaVa-graph-caption-to-paragraph --multi-modal --num-gpus 2
 ```
 Wait until the process finishes loading the model and you see "Uvicorn running on ...".
 
@@ -154,42 +138,7 @@ Example output (varies in different runs):
 
 
 ## Evaluation
-
-### GPT-assisted Evaluation
-
-Our GPT-assisted evaluation pipeline for multimodal modeling is provided for a comprehensive understanding of the capabilities of vision-language models.  Please see our paper for more details.
-
-1. Generate LLaVA responses
-
-```Shell
-python model_vqa.py \
-    --model-name ./checkpoints/LLaVA-13B-v0 \
-    --question-file \
-    playground/data/coco2014_val_qa_eval/qa90_questions.jsonl \
-    --image-folder \
-    /path/to/coco2014_val \
-    --answers-file \
-    /path/to/answer-file.jsonl
-```
-
-2. Evaluate the generated responses.  In our case, [`answer-file-1.jsonl`](./playground/data/coco2014_val_qa_eval/qa90_gpt4_answer.jsonl) is the response generated by text-only GPT-4 (0314), with the context captions/boxes provided.
-
-```Shell
-OPENAI_API_KEY="sk-***********************************" python eval_gpt_review_visual.py \
-    --question playground/data/coco2014_val_qa_eval/qa90_questions.jsonl \
-    --context table/caps_boxes_coco2014_val_80.jsonl \
-    --answer-list \
-    /path/to/answer-file-1.jsonl \
-    /path/to/answer-file-2.jsonl \
-    --rule table/rule.json \
-    --output /path/to/review.json
-```
-
-3. Summarize the evaluation results
-
-```Shell
-python summarize_gpt_review.py
-```
+[TODO]
 
 
 
@@ -323,14 +272,6 @@ python llava/train/train_mem.py \
 </details>
 
 
-### Train LLaVA Lightning
-LLaVA-Lightning can be trained on 8x A100 GPUs in just 3 hours, including both pretraining and finetuning. When using spot instances, it costs just ~$40.
-
-Please make sure to: (1) [install](#install) or [upgrade](#upgrade-to-latest-code-base) to the latest code base, and (2) pass the correct model version identifier `v0`/`v1` to ensure the correct conversation template is loaded.
-
-```Shell
-bash ./scripts/train_lightning.sh {v0,v1}
-```
 
 #### Hyperparameters
 
