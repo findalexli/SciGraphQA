@@ -1,6 +1,6 @@
-# 🌋 LLaVA: Large Language and Vision Assistant
-
-*Visual instruction tuning towards large language and vision models with GPT-4 level capabilities.*
+# 🌋 LLaVA-Graph: Context-prompted vision-language assistant for explaning scientific graphs
+*TLDR: We re-formulate image-caption-generation problem as context-prompted 'explanation' generation problem, which alings models output given image and caption to 
+the first mentioned paragraph in 290K CS-papers(SciCap). Training data has 5X more tokens than LLaVa*
 
 [[Project Page](https://llava-vl.github.io/)] [[Paper](https://arxiv.org/abs/2304.08485)] [[Demo](https://llava.hliu.cc/)]  [[Data](https://huggingface.co/datasets/liuhaotian/LLaVA-Instruct-150K)] [[Model](https://huggingface.co/liuhaotian/LLaVA-13b-delta-v0)]
 
