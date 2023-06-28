@@ -1,7 +1,7 @@
 # 🌋 LLaVA-Graph: Context-prompted vision-language assistant for explaining scientific graphs
 *TLDR: We re-formulate the image-caption-generation problem as a context-prompted 'explanation' generation problem, which aligns the model's output given (graph, caption) to its first mentioned paragraph. Trained with SciCap-390K, 5X more tokens using SciCap compared to original LLaVa vision-text alignment pretraining corpse *
 
-[[Demo](https://llava.hliu.cc/)]  [[Data](https://github.com/findalexli/LLaVA-Graph)] [[Model](https://huggingface.co/alexshengzhili/LLaVa-graph-caption-to-paragraph)]
+[[Demo](https://llava.alex.li/)]  [[Data]([https://github.com/findalexli/LLaVA-Graph](https://huggingface.co/datasets/alexshengzhili/LLAVA-graph-OCRCleaned))] [[Model](https://huggingface.co/alexshengzhili/Llava-Graph-ocr-ft-on-instruct150k)]
 
 ## Main Contribution of LLaVA-Graph from LLaVa
 - **Caption as context, not as prediction target**. 
