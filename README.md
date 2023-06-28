@@ -3,7 +3,7 @@
 
 [[Demo](https://llava-graph.alexli.me/)]  [[Dataset](https://huggingface.co/datasets/alexshengzhili/LLAVA-graph-OCRCleaned)] [[Model](https://huggingface.co/alexshengzhili/Llava-Graph-ocr-ft-on-instruct150k)]
 
-![Screenshot 2023-06-28 at 2 03 51 PM](https://github.com/findalexli/LLaVA-Graph/assets/11794421/1fcbea17-9fd0-4d39-a07f-ac051bda5a98)
+
 ## Main Contribution of LLaVA-Graph from LLaVa
 - **Caption as context, not as prediction target**. 
     One-third of captions in SciCap are single-sentence (Hsu et al.2023) Many are incomplete sentences(i.e.  "Vary number of objects') or consist of single/multiple Nouns ('IIPS', 'Average Travel Time'). Efforts to predict captions from images have not been successful, despite attempts to contextualize the model (Yang, 2023). We theorized that captions are instead excellent prompts to the Large Vision-Language Models. 
@@ -12,12 +12,9 @@
 - **Paragraph as alignment given above context**. 
     First-paragraphs that mentioned the figure are significantly more informative and carry descriptive and logical explanations, which we hypothesized to aid as ground truth in instructing the LMM to assist users in understanding graphs via Chat. LLaVA-receipt has two steps: 1. (image, caption) feature alignment which is to train a vision token projector into the language token space, pretraining on filtered 590K images with short captions . 2 (image, ground truth bounding box, GPT-4 rewritten multi-turn conversation) for visual instruction tuning. We **switched the first step of feature alignment using the proposed stronger signal between (image, short academic caption, ocr extracted token) and (first mentioned paragraph)**. Our training dataset is constructed using SciCap from 290K papers published on Arxiv on topics of CS and ML. Our training corpse [[Data](https://github.com/findalexli/LLaVA-Graph)] is 5X larger than LLaVa pre-training dataset (LiON-CC-590K) 
 
-Example Prompt includes the figure, OCR extracted text and caption : 
-![Screenshot 2023-06-28 at 3 41 49 PM](https://github.com/findalexli/LLaVA-Graph/assets/11794421/eee239b9-f1a6-4a4f-93da-cbdfdda24ad9)
 
-
-![Screenshot 2023-06-28 at 3 34 30 PM](https://github.com/findalexli/LLaVA-Graph/assets/11794421/29be8446-0fc0-40ba-8312-a70eec25fb23)
-
+![Screenshot 2023-06-28 at 3 41 49 PM](https://github.com/findalexli/LLaVA-Graph/assets/11794421/3f515b0d-813e-4c56-af85-a2173873fb3b)
+![Screenshot 2023-06-28 at 3 47 08 PM](https://github.com/findalexli/LLaVA-Graph/assets/11794421/018e288a-b98c-4cf2-a281-c1ca4133998a)
 
 
 **Usage and License Notices**: The data, code and checkpoint is intended and licensed for research use only. They are also restricted to uses that follow the license agreement of LLaMA, Vicuna and GPT-4. The dataset is CC BY NC 4.0 (allowing only non-commercial use) and models trained using the dataset should not be used outside of research purposes.
