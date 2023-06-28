@@ -1,5 +1,5 @@
 # 🌋 LLaVA-Graph: Context-prompted vision-language assistant for explaining scientific graphs
-*TLDR: We re-formulate the image-caption-generation problem as a context-prompted 'explanation' generation problem, which aligns the model's output given (graph, caption) to its first mentioned paragraph. Trained with SciCap-390K, 5X more tokens using SciCap compared to original LLaVa vision-text alignment pretraining corpse *
+*TLDR: We re-formulate the image-caption-generation problem as a context-prompted 'explanation' generation problem, which aligns the model's output given (graph, caption) to its first mentioned paragraph. We trained a linear projector from Clip-Vit-Large vision tokens to align with Vicuna-7b, using 5X more tokens compared to the original LLaVa vision text based on 390K Arxiv graph-caption-paragraph samples, then fine-tune Vicuna using GPT-4 instructed dataset. *
 
 [[Demo](https://llava-graph.alexli.me/)]  [[Dataset](https://huggingface.co/datasets/alexshengzhili/LLAVA-graph-OCRCleaned)] [[Model](https://huggingface.co/alexshengzhili/Llava-Graph-ocr-ft-on-instruct150k)]
 
@@ -23,7 +23,7 @@
 ## Contents
 - [Data Download](#data-download)
 - [Install](#install)
-- [LLaVA Weights](#llava-weights)
+- [LLaVA-GRAPH Weights](#llava-weights)
 - [Serving](#serving)
 - [Evaluation](#evaluation)
 - [Fine-tuning](#fine-tuning)
@@ -32,8 +32,8 @@
 
 | Data file name | Size |
 | --- | ---: |
+| [[SciCapPlus390K](https://huggingface.co/datasets/alexshengzhili/LLAVA-graph-OCRCleaned)] | 935 MB
 | [llava_instruct_150k.json](https://huggingface.co/datasets/liuhaotian/LLaVA-Instruct-150K/raw/main/llava_instruct_150k.json) | 229 MB |
-
 
 ### Pretraining Dataset
 The pretraining dataset used in this release is from the SciCap dataset. SCICAP is a large-scale image captioning dataset that contains real-world scientific figures and captions. SCICAP was constructed using more than two million images from over 290,000 papers collected and released by arXiv.Homepage. The papers are filtered as 2010-2020 compuer science and machine learning papers. Hsu, Giles, and Huang (2021) show that text normalizationand figure filtering do not improve model performance.
@@ -48,7 +48,7 @@ where Xc are context tokens (from caption and ocr-extract text), Xq is randomly 
 1. Clone this repository and navigate to LLaVA folder
 ```bash
 git clone https://github.com/findalexli/LLaVA-Graph
-cd LLaVA
+cd LLaVA-Graph
 ```
 
 2. Install Package
@@ -72,20 +72,11 @@ model = AutoModelForCausalLM.from_pretrained("alexshengzhili/LLaVa-graph-caption
 ```
 
 
-### LLaVA-7B
-This conversion command needs around 30 GB of CPU RAM.
-```bash
-python3 -m llava.model.apply_delta \
-    --base /path/to/llama-7b \
-    --target /output/path/to/LLaVA-7B-v0 \
-    --delta liuhaotian/LLaVA-7b-delta-v0
-```
-
 
 ### LLaVA pretrained projector weights
-The initial release is pretrained on [LLaVA-filtered CC3M 595K](https://huggingface.co/datasets/liuhaotian/LLaVA-CC3M-Pretrain-595K) with 1 epoch.  The pretrained weights are released [here](https://huggingface.co/liuhaotian/LLaVA-13b-pretrain-projector-v0).
+The initial release is pretrained on [[SciCapPlus](https://huggingface.co/datasets/alexshengzhili/LLAVA-graph-OCRCleaned)] with 1 epoch.  The pretrained weights are released [here](https://huggingface.co/alexshengzhili/llava-7bv0-mm-projector-ft-with-ocr-caption-prompted-paragraph). 
 
-You may perform instruction tuning on our pretrained checkpoints, by using our [visual instruction tuning](https://huggingface.co/datasets/liuhaotian/LLaVA-Instruct-150K) data following the instructions [here](https://github.com/haotian-liu/LLaVA#fine-tuning-with-local-gpus).
+
 
 ## Serving
 
@@ -117,32 +108,11 @@ python -m llava.serve.gradio_web_server --controller http://localhost:10000
 ```
 #### You can open your browser and chat with a model now.
 
-### CLI Inference
 
-A starting script for inference with LLaVA without the need of Gradio interface. The current implementation only supports for a single-turn Q-A session, and the interactive CLI is WIP.  This also serves as an example for users to build customized inference scripts.
-
-```Shell
-python -m llava.eval.run_llava \
-    --model-name /path/to/LLaVA-13B-v0 \
-    --image-file "https://llava-vl.github.io/static/images/view.jpg" \
-    --query "What are the things I should be cautious about when I visit here?"
-```
-
-Example output (varies in different runs):
-
-> When visiting this picturesque location with a serene lake and a wooden pier extending over the water, one should be cautious about various safety aspects. Some important considerations include:
-> 
-> 1. Ensuring that the pier is structurally sound andstable, as old or weakened pier structures might not support the weight of visitors.
-> 2. Being aware of the water depth around the pier and lake, as sudden drop-offs or strong currents may pose a risk to swimmers, boaters, or those who venture too close to the edge.
-> 3. Staying vigilant about the presence of wildlife in the area, such as slippery, stealthy fish or other animals that might cause harm or inconvenience.
-> 4. Maintaining a safe distance from the water's edge, particularly for children, elderly individuals, or those who are not strong swimmers.
-> 5. Following any posted signs or guidelines related to safety and the use of the pier and surrounding areas.
-> 
-> By considering these safety precautions, visitors can enjoy the natural beauty of the location while minimizing risks and ensuring a safe and pleasant experience.
 
 
 ## Evaluation
-[TODO]
+[WIP]
 
 
 
@@ -163,7 +133,7 @@ We fine-tune the model using the code from [FastChat](https://github.com/lm-sys/
 | LLaVA-13B | 32 | 2e-5 | 3 | 2048 | 0 |
 
 ### Fine-tuning with Local GPUs
-LLaVA is trained on 8 A100 GPUs with 80GB memory with the following code. To train on fewer GPUs, you can reduce the `per_device_train_batch_size` and increase the `gradient_accumulation_steps` accordingly to keep the global batch size the same.
+LLaVA-Graph is trained on 8 A100 GPUs with 80GB memory with the following code. To train on fewer GPUs, you can reduce the `per_device_train_batch_size` and increase the `gradient_accumulation_steps` accordingly to keep the global batch size the same.
 
 1. Pretraining
 
@@ -205,40 +175,6 @@ torchrun --nnodes=1 --nproc_per_node=8 --master_port=25001 \
 
 You may run this with a single A100 GPU with the following code.  Please note that the `per_device_train_batch_size` * `gradient_accumulation_steps` should be equal to 128 to keep the global batch size the same.
 
-<details>
-<summary>Pretrain: LLaVA-13B, 1x A100 (80G).  Time: ~33 hours.</summary>
-
-```Shell
-python llava/train/train_mem.py \
-    --model_name_or_path ./checkpoints/llama-vicuna-13b \
-    --data_path /path/to/cc3m_595k.json \
-    --image_folder /path/to/cc3m_595k \
-    --vision_tower openai/clip-vit-large-patch14 \
-    --tune_mm_mlp_adapter True \
-    --mm_vision_select_layer -2 \
-    --mm_use_im_start_end \
-    --bf16 True \
-    --output_dir ./checkpoints/llava-13b-pretrain \
-    --num_train_epochs 1 \
-    --per_device_train_batch_size 16 \
-    --per_device_eval_batch_size 4 \
-    --gradient_accumulation_steps 8 \
-    --evaluation_strategy "no" \
-    --save_strategy "steps" \
-    --save_steps 2400 \
-    --save_total_limit 1 \
-    --learning_rate 2e-3 \
-    --weight_decay 0. \
-    --warmup_ratio 0.03 \
-    --lr_scheduler_type "cosine" \
-    --logging_steps 1 \
-    --tf32 True \
-    --model_max_length 2048 \
-    --gradient_checkpointing True \
-    --lazy_preprocess True \
-    --report_to wandb
-```
-</details>
 
 <details>
 <summary>Pretrain: LLaVA-7B, 1x A100 (80G/40G).  Time: ~19 hours.</summary>
@@ -275,21 +211,6 @@ python llava/train/train_mem.py \
 ```
 </details>
 
-
-
-#### Hyperparameters
-
-1. Pretraining
-
-| Hyperparameter | Global Batch Size | Learning rate | Epochs | Max length | Weight decay |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| LLaVA-Lightning-7B | 128 | 2e-3 | 1 | 2048 | 0 |
-
-2. Finetuning
-
-| Hyperparameter | Global Batch Size | Learning rate | Epochs | Max length | Weight decay |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| LLaVA-Lightning-7B | 128 | 2e-5 | 1 | 2048 | 0 |
 
 
 
