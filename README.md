@@ -12,8 +12,29 @@
 - **Paragraph as alignment given above context**. 
     First-paragraphs that mentioned the figure are significantly more informative and carry descriptive and logical explanations, which we hypothesized to aid as ground truth in instructing the LMM to assist users in understanding graphs via Chat. LLaVA-receipt has two steps: 1. (image, caption) feature alignment which is to train a vision token projector into the language token space, pretraining on filtered 590K images with short captions . 2 (image, ground truth bounding box, GPT-4 rewritten multi-turn conversation) for visual instruction tuning. We **switched the first step of feature alignment using the proposed stronger signal between (image, short academic caption, ocr extracted token) and (first mentioned paragraph)**. Our training dataset is constructed using SciCap from 290K papers published on Arxiv on topics of CS and ML. Our training corpse [[Data](https://github.com/findalexli/LLaVA-Graph)] is 5X larger than LLaVa pre-training dataset (LiON-CC-590K) 
 
-Example: 
-![Screenshot 2023-06-28 at 2 03 51 PM](https://github.com/findalexli/LLaVA-Graph/assets/11794421/1fcbea17-9fd0-4d39-a07f-ac051bda5a98)
+Example input: 
+![Screenshot 2023-06-28 at 2 02 15 PM](https://github.com/findalexli/LLaVA-Graph/assets/11794421/7041549f-6b5a-4cd7-8d7a-ecc939e3f2e1)
+Prompt includes OCR extracted text and caption of the figure from literature
+
+OCR extracted text list, separated by ', ' : 350Learning Rate300· 0.0050.01250- 0.01820015010050100200300400500Number of IterationError, 350, Learning, Rate, 300, ·, 0.005, 0.01, 250, -, 0.018, 200, 150, 100, 50, 100, 200, 300, 400, 500, Number, of, Iteration, Error Fig. 4. Learning error for different learning rates.Clarify the contents of the displayed image with great detail
+
+LlaVA-Graph (our work): 
+The image displays a graph with a learning rate curve, showing the relationship between the number of iterations and the learning error. The x-axis represents the number of iterations, while the y-axis represents the learning error. The graph appears to have been created using a program like Excel, as the chart is in the.xlsx format.
+There are several lines on the graph, each corresponding to a different learning rate. The learning rates are plotted against the number of iterations, illustrating how the learning error changes as the number of iterations increases. The different learning rates are represented by different colors, making it easier to distinguish the corresponding curves.
+
+OpenFlamingo (same prompt, including OCR): 
+Question: OCR extracted text list, separated by ', ' : 350Learning Rate300· 0.0050.01250- 0.01820015010050100200300400500Number of IterationError, 350, Learning, Rate, 300, ·, 0.005, 0.01, 250, -, 0.018, 200, 150, 100, 50, 100, 200, 300, 400, 500, Number, of, Iteration, Error Fig. 4. Learning error for different learning rates. Can you clarify the contents of the displayed image with great detail Answer:  The image is a map of the United States.
+
+LlaVA (13B-v1-1) (same prompt, including OCR): 
+The image displays a graph with a learning rate curve, showing the relationship between the number of iterations and the learning error. The x-axis represents the number of iterations, while the y-axis represents the learning error. The graph appears to have been created using a program like Excel, as the chart is in the.xlsx format.
+There are several lines on the graph, each corresponding to a different learning rate. The learning rates are plotted against the number of iterations, illustrating how the learning error changes as the number of iterations increases. The different learning rates are represented by different colors, making it easier to distinguish the corresponding curves.
+![image](https://github.com/findalexli/LLaVA-Graph/assets/11794421/ed553d0d-6fd4-4fd3-8845-63a1f30b6425)
+
+mPLUG-Owl (same prompt, including OCR): 
+The image shows a graph with a horizontal axis labeled "Iteration" and a vertical axis labelled "Learning Rate." There are multiple points along the graph, with each point representing an iteration and learning rate combination. The graph is divided into sections, each representing different learning rates. 
+In total, there are 150 points on the x-axis, and each of these points corresponds to a different combination of learning and iteration numbers. For example, the first point on this axis is at 0.005 and the second point is 20 iterations, while the third point has a learning value of 40 and an iterative value that is not visible. This chart shows the learning curve of the model as it progresses through various iterations and training parameters.
+![image](https://github.com/findalexli/LLaVA-Graph/assets/11794421/e3a92ee0-ce4e-4dd5-8ea7-0afe9b0ab8a9)
+
 
 **Usage and License Notices**: The data, code and checkpoint is intended and licensed for research use only. They are also restricted to uses that follow the license agreement of LLaMA, Vicuna and GPT-4. The dataset is CC BY NC 4.0 (allowing only non-commercial use) and models trained using the dataset should not be used outside of research purposes.
 
