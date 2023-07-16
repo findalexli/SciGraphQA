@@ -24,3 +24,4 @@ output
 
 checkpoints
 ckpts*
+*.arrow
