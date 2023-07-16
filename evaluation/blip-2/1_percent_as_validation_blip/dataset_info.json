@@ -1,0 +1,79 @@
+{
+  "citation": "",
+  "dataset_size": 16925558,
+  "description": "",
+  "download_checksums": {
+    "https://huggingface.co/datasets/alexshengzhili/SciCapInstructed-graph-only-qa/resolve/584fa17d771b3acdb4ca432228448e9bd5ce4dea/data/1_percent_as_validation-00000-of-00001-8b3a152571dd1321.parquet": {
+      "num_bytes": 7889034,
+      "checksum": null
+    }
+  },
+  "download_size": 7889034,
+  "features": {
+    "image_file": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "id": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "caption": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "conversations": [
+      {
+        "from": {
+          "dtype": "string",
+          "_type": "Value"
+        },
+        "value": {
+          "dtype": "string",
+          "_type": "Value"
+        }
+      }
+    ],
+    "first_mention": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "response": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "title": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "abstract": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "q_a_pairs": {
+      "feature": {
+        "feature": {
+          "dtype": "string",
+          "_type": "Value"
+        },
+        "_type": "Sequence"
+      },
+      "_type": "Sequence"
+    },
+    "response_BLIP2": {
+      "dtype": "string",
+      "_type": "Value"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 24814592,
+  "splits": {
+    "1_percent_as_validation": {
+      "name": "1_percent_as_validation",
+      "num_bytes": 16925558,
+      "num_examples": 3002,
+      "dataset_name": "parquet"
+    }
+  }
+}
