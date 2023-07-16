@@ -1,0 +1,99 @@
+{"text": "What is the difference between the two graphs in Figure 10?", "category": "conv", "image": "1801.01974v2-Figure10-1.png", "question_id": 0}
+{"text": "What is the main difference between this experiment and the one described in Section 3.1?", "category": "conv", "image": "1801.05671v1-Figure9-1.png", "question_id": 1}
+{"text": "What are the main takeaways from the graph in Figure 9?", "category": "conv", "image": "2004.06653v1-Figure9-1.png", "question_id": 2}
+{"text": "What is the relationship between the standard deviation of Gaussian sampling and the NME results?", "category": "conv", "image": "1803.06598v1-Figure8-1.png", "question_id": 3}
+{"text": "What does the graph in Figure 7 show?", "category": "conv", "image": "2004.04071v2-Figure7-1.png", "question_id": 4}
+{"text": "What is the relationship between the mean square error (MSE) and the signal-to-noise ratio (SNR) for the proposed IMLE and IMAPE algorithms?", "category": "conv", "image": "1603.08982v1-Figure2-1.png", "question_id": 5}
+{"text": "What is the main takeaway from the graph?", "category": "conv", "image": "1411.4940v2-Figure9-1.png", "question_id": 6}
+{"text": "What does the graph show about the training history of the neural network?", "category": "conv", "image": "2005.11194v2-Figure4-1.png", "question_id": 7}
+{"text": "What is the significance of the gap between the achievable scheme and the outer-bounds in Corollary 1?", "category": "conv", "image": "1103.5426v3-Figure7-1.png", "question_id": 8}
+{"text": "What does the graph show about the relationship between group size and the percentage of groups for which a timetable was found?", "category": "conv", "image": "1301.0216v1-Figure9-1.png", "question_id": 9}
+{"text": "What is the relationship between learning rate and momentum in RBM learning?", "category": "conv", "image": "1610.06815v1-Figure4-1.png", "question_id": 10}
+{"text": "What is the fast multipole method (FMM)?", "category": "conv", "image": "1904.07061v1-Figure13-1.png", "question_id": 11}
+{"text": "What are the main takeaways from the graph?", "category": "conv", "image": "1904.05777v2-Figure6-1.png", "question_id": 12}
+{"text": "What is the RMSE in concentration of the MAP-MHE state estimator as a function of time for a random network of 5 threshold sensors?", "category": "conv", "image": "1804.02167v1-Figure3-1.png", "question_id": 13}
+{"text": "What is the purpose of the graph?", "category": "conv", "image": "1910.11851v1-Figure6-1.png", "question_id": 14}
+{"text": "What does the graph show about the regression quality of the probe nets?", "category": "conv", "image": "1803.09588v1-Figure7-1.png", "question_id": 15}
+{"text": "What is the relationship between the cost-to-benefit ratio and the frequency of cooperation?", "category": "conv", "image": "1304.4928v1-Figure1-1.png", "question_id": 16}
+{"text": "What is the main purpose of the metasurface in this experiment?", "category": "conv", "image": "2007.11503v2-Figure22-1.png", "question_id": 17}
+{"text": "What is the purpose of this experiment?", "category": "conv", "image": "1904.01697v4-Figure10-1.png", "question_id": 18}
+{"text": "What is the effect of the ground network densification on the average wireless latency per UAV?", "category": "conv", "image": "1801.05500v1-Figure8-1.png", "question_id": 19}
+{"text": "What does the graph show about the influence of candidate paths on the performance of the algorithms on the wide grid instances with k = 1 and k = 10 constraints?", "category": "conv", "image": "1504.07880v2-Figure5-1.png", "question_id": 20}
+{"text": "What is the significance of the curves in Figure 8?", "category": "conv", "image": "1110.2739v1-Figure8-1.png", "question_id": 21}
+{"text": "What is the difference between the two graphs?", "category": "conv", "image": "1006.4386v1-Figure3-1.png", "question_id": 22}
+{"text": "What is the main difference between the two graphs?", "category": "conv", "image": "1210.5752v1-Figure3-1.png", "question_id": 23}
+{"text": "What is the relationship between the total production of goods and the mean age achieved by economic agents?", "category": "conv", "image": "1412.6924v2-Figure5-1.png", "question_id": 24}
+{"text": "The graph shows a transition probability in the recall process as a function of what?", "category": "conv", "image": "1611.04842v1-Figure2-1.png", "question_id": 25}
+{"text": "What is the main takeaway from this graph?", "category": "conv", "image": "1305.3699v1-Figure1-1.png", "question_id": 26}
+{"text": "What is the main takeaway from this graph?", "category": "conv", "image": "1101.1350v3-Figure4-1.png", "question_id": 27}
+{"text": "The graph shows the landscape of supervised cost function and unsupervised cost functions along random lines that pass through the ground truth solution. What are the key takeaways from this graph?", "category": "conv", "image": "1606.04646v1-Figure3-1.png", "question_id": 28}
+{"text": "What does the graph show about the proposed global LSTM with GP local model?", "category": "conv", "image": "1812.00098v1-Figure2-1.png", "question_id": 29}
+{"text": "What is the relationship between the number of users and the mean data rate per user?", "category": "conv", "image": "1808.06579v1-Figure2-1.png", "question_id": 30}
+{"text": "What does the graph show about the performance of stochastic algorithms with various minibatch sizes?", "category": "conv", "image": "1802.03830v1-Figure3-1.png", "question_id": 31}
+{"text": "What is the significance of the graph in the context of the paragraph?", "category": "conv", "image": "1912.02768v1-Figure1-1.png", "question_id": 32}
+{"text": "What are the key takeaways from the frequency responses for different wind speeds?", "category": "conv", "image": "2006.00156v1-Figure9-1.png", "question_id": 33}
+{"text": "What is the purpose of the graph?", "category": "conv", "image": "1306.1392v1-Figure6-1.png", "question_id": 34}
+{"text": "What is the purpose of the graph?", "category": "conv", "image": "1905.06443v3-Figure3-1.png", "question_id": 35}
+{"text": "What is the purpose of the graph?", "category": "conv", "image": "1711.02344v1-Figure6-1.png", "question_id": 36}
+{"text": "What is the purpose of the smart load distribution described in Section 5?", "category": "conv", "image": "1903.00729v1-Figure4-1.png", "question_id": 37}
+{"text": "What are the key findings from the experimental results in the campus environment?", "category": "conv", "image": "1902.06371v1-Figure5.1-1.png", "question_id": 38}
+{"text": "What is the relationship between social welfare and \u03b1 in the case with multiple entrants and fixed \u03b1\u03b2?", "category": "conv", "image": "2001.01388v1-Figure9-1.png", "question_id": 39}
+{"text": "What is the main idea of the graph?", "category": "conv", "image": "1708.02983v1-Figure10-1.png", "question_id": 40}
+{"text": "What is the main difference between the two graphs in the figure?", "category": "conv", "image": "1905.08894v2-Figure4-1.png", "question_id": 41}
+{"text": "What is the significance of the graph in the context of the paper?", "category": "conv", "image": "2001.05578v1-Figure5-1.png", "question_id": 42}
+{"text": "What is the purpose of the sampling in the graph?", "category": "conv", "image": "2006.11943v1-Figure4-1.png", "question_id": 43}
+{"text": "The graph shows the value of validity measures for different algorithms. What can you tell me about the performance of the proposed algorithm compared to other algorithms?", "category": "conv", "image": "1302.3123v1-Figure1-1.png", "question_id": 44}
+{"text": "What is the purpose of the graph?", "category": "conv", "image": "1710.11431v2-Figure7-1.png", "question_id": 45}
+{"text": "What is the significance of the time metrics shown in the graph?", "category": "conv", "image": "1612.03449v3-Figure7-1.png", "question_id": 46}
+{"text": "What is the purpose of the learning sample in the context of this graph?", "category": "conv", "image": "1707.04849v1-Figure2-1.png", "question_id": 47}
+{"text": "What does the graph show about the impact of the number of GNN hops on the model performance?", "category": "conv", "image": "2004.06015v1-Figure2-1.png", "question_id": 48}
+{"text": "What is the relationship between the FOPID and PID controllers in terms of set point tracking?", "category": "conv", "image": "1205.1765v2-Figure3-1.png", "question_id": 49}
+{"text": "What does the graph show about the performance of the MaxMin-UCB algorithm with varying m?", "category": "conv", "image": "1903.00543v2-Figure3-1.png", "question_id": 50}
+{"text": "What is the relationship between the number of BS antennas and the MSE metrics?", "category": "conv", "image": "1903.00269v2-Figure3-1.png", "question_id": 51}
+{"text": "What is the purpose of the graph in Figure 4?", "category": "conv", "image": "2005.11045v1-Figure4-1.png", "question_id": 52}
+{"text": "What is the significance of the number of constrained dimensions k in the context of this graph?", "category": "conv", "image": "1905.02458v3-Figure10-1.png", "question_id": 53}
+{"text": "What is the significance of the upper and lower bounds shown in the graph?", "category": "conv", "image": "1910.13290v5-Figure6-1.png", "question_id": 54}
+{"text": "The graph shows the complexity function of the trapezoidal word w = aaababa. What does the complexity function represent?", "category": "conv", "image": "1203.1203v2-Figure1-1.png", "question_id": 55}
+{"text": "The figure shows the micro-f1 and macro-f1 scores for all approaches when predicting a vertex's local clustering coefficient value across all datasets. The results show that the local clustering coefficient is easier for a classifier to reconstruct from the embedding space than the triangle count. This is likely because the local clustering coefficient is a more direct measure of the local structure of a vertex, while the triangle count is a more global measure.", "category": "conv", "image": "1806.07464v1-Figure5-1.png", "question_id": 56}
+{"text": "The graph shows the RMSE of the proposed fifth-degree SIF (SI 5) with third-degree SIF (SIF3), third-degree CKF (CKF3), fifth-degree CKF (CKF5), and fifth-degree QSIF (QSIF5) for q = 2 and q = 4. What can be inferred from the graph?", "category": "conv", "image": "1608.00337v1-Figure1-1.png", "question_id": 57}
+{"text": "What are the key differences between the discharge curves of dry and damp wood shavings?", "category": "conv", "image": "2003.07816v1-Figure2-1.png", "question_id": 58}
+{"text": "What is the significance of the spike function in Example 5.3?", "category": "conv", "image": "1701.08947v1-Figure1-1.png", "question_id": 59}
+{"text": "What does the graph show?", "category": "conv", "image": "1908.11749v1-Figure2-1.png", "question_id": 60}
+{"text": "What is the significance of the state-symbol plot in Figure 1?", "category": "conv", "image": "1110.2230v1-Figure1-1.png", "question_id": 61}
+{"text": "What is the main message of the graph?", "category": "conv", "image": "2006.00896v2-Figure11-1.png", "question_id": 62}
+{"text": "What is the main purpose of the graph?", "category": "conv", "image": "1904.12643v1-Figure14-1.png", "question_id": 63}
+{"text": "What is the purpose of the graph?", "category": "conv", "image": "1504.03076v1-Figure4-1.png", "question_id": 64}
+{"text": "The graph shows the results of the vanishing viscosity method for the singular (thin) vortex sheet at time t = 1. What can be inferred from the graph about the effect of increasing the resolution on the viscous damping and the disintegration of the sheet?", "category": "conv", "image": "1903.12361v2-Figure16-1.png", "question_id": 65}
+{"text": "What does the graph show?", "category": "conv", "image": "2006.00165v2-Figure13-1.png", "question_id": 66}
+{"text": "What is the significance of the red, blue, and green lines in the graph?", "category": "conv", "image": "1912.04711v2-Figure4-1.png", "question_id": 67}
+{"text": "What is the main goal of the graph?", "category": "conv", "image": "1909.12104v1-Figure8-1.png", "question_id": 68}
+{"text": "What is the effect of the focal length on the joints locations metrics?", "category": "conv", "image": "2009.06549v1-Figure2-1.png", "question_id": 69}
+{"text": "What is the difference between the two graphs in Figure 11?", "category": "conv", "image": "1910.09949v2-Figure11-1.png", "question_id": 70}
+{"text": "What is the purpose of the graph?", "category": "conv", "image": "1802.02193v1-Figure3-1.png", "question_id": 71}
+{"text": "What is the main takeaway from the graph?", "category": "conv", "image": "2009.00377v1-Figure2-1.png", "question_id": 72}
+{"text": "What are the two main axes of the graph?", "category": "conv", "image": "1804.03648v1-Figure3-1.png", "question_id": 73}
+{"text": "What is the purpose of this graph?", "category": "conv", "image": "2008.01170v1-Figure8-1.png", "question_id": 74}
+{"text": "What is the purpose of the algorithm illustrated in the graph?", "category": "conv", "image": "2007.05236v2-Figure4.4-1.png", "question_id": 75}
+{"text": "What are the axes of the graph?", "category": "conv", "image": "2010.02988v1-Figure16-1.png", "question_id": 76}
+{"text": "What does the graph show about the average travel time for the mesoscopic and microscopic models?", "category": "conv", "image": "1609.01475v1-Figure14-1.png", "question_id": 77}
+{"text": "What is the purpose of the graph?", "category": "conv", "image": "1906.09665v2-Figure7-1.png", "question_id": 78}
+{"text": "What is the main difference between the two graphs in Figure 9?", "category": "conv", "image": "2001.11086v3-Figure9-1.png", "question_id": 79}
+{"text": "What is the purpose of the graph?", "category": "conv", "image": "1610.06806v1-Figure8-1.png", "question_id": 80}
+{"text": "What is the significance of the fifth vehicle dynamics in the graph?", "category": "conv", "image": "1610.01971v1-Figure6-1.png", "question_id": 81}
+{"text": "What is the significance of the 53.05 dBm value in the context of the graph?", "category": "conv", "image": "1701.01763v1-Figure5-1.png", "question_id": 82}
+{"text": "What are the main takeaways from the graph?", "category": "conv", "image": "2007.07442v1-Figure11-1.png", "question_id": 83}
+{"text": "What is the main goal of the experiment shown in the graph?", "category": "conv", "image": "2002.03712v1-Figure1-1.png", "question_id": 84}
+{"text": "What are the key takeaways from the graph?", "category": "conv", "image": "1510.04026v1-Figure11-1.png", "question_id": 85}
+{"text": "What is the main focus of the graph?", "category": "conv", "image": "1602.07623v1-Figure3-1.png", "question_id": 86}
+{"text": "What is the purpose of the graph?", "category": "conv", "image": "1707.01567v2-Figure10-1.png", "question_id": 87}
+{"text": "What does the graph show about the performance of the three learning algorithms?", "category": "conv", "image": "1611.05638v1-Figure15-1.png", "question_id": 88}
+{"text": "What does the graph show?", "category": "conv", "image": "1005.4021v3-Figure5-1.png", "question_id": 89}
+{"text": "What is the purpose of the graph?", "category": "conv", "image": "2001.03519v1-Figure3-1.png", "question_id": 90}
+{"text": "What is the significance of the bootstrap test?", "category": "conv", "image": "1805.04439v1-Figure9-1.png", "question_id": 91}
+{"text": "What is the difference between the easy and hard tasks in the CoinRun imitation learning results?", "category": "conv", "image": "1805.07914v3-Figure5-1.png", "question_id": 92}
+{"text": "What does the graph show about the life time of pages in WM?", "category": "conv", "image": "1602.00193v2-Figure7-1.png", "question_id": 93}
+{"text": "What does the graph show about the effect of reducing the size of the guard set on the fraction of attacker-free (entry, exit) pairs?", "category": "conv", "image": "1505.05173v6-Figure9-1.png", "question_id": 94}
+{"text": "What is the main idea of the graph?", "category": "conv", "image": "1611.06310v2-Figure2-1.png", "question_id": 95}
+{"text": "What is the purpose of the Wiener filter code given in App. C?", "category": "conv", "image": "1301.4499v2-Figure2-1.png", "question_id": 96}
+{"text": "What is the main focus of the first experiment?", "category": "conv", "image": "1612.03042v1-Figure3-1.png", "question_id": 97}
+{"text": "What is the purpose of the packet-to-app mapping?", "category": "conv", "image": "1703.07551v2-Figure5-1.png", "question_id": 98}
