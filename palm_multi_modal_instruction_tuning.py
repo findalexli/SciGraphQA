@@ -9,13 +9,13 @@ Importantly, the output token limit was set to be 200 before and now is set at m
 
 import vertexai
 import os
-# PROJECT_ID = "rwe-200-survey-data"  # @param {type:"string"}
+PROJECT_ID = "rwe-200-survey-data"  # @param {type:"string"}
 vertexai.init(project=PROJECT_ID, location="us-central1")
 
-import pandas as pd
-import seaborn as sns
-from IPython.display import Markdown, display
-from sklearn.metrics.pairwise import cosine_similarity
+# import pandas as pd
+# import seaborn as sns
+# from IPython.display import Markdown, display
+# from sklearn.metrics.pairwise import cosine_similarity
 from vertexai.preview.language_models import (ChatModel, InputOutputTextPair,
                                               TextEmbeddingModel,
                                               TextGenerationModel)
@@ -101,8 +101,8 @@ def return_palm(example):
     example['response'] = chat.send_message(prompt).text
     return example
     
-dataset = load_dataset("alexshengzhili/SciCapAbstractsOCR0350K", num_proc  = 4, split = 'train[:1%]')
+dataset = load_dataset("alexshengzhili/SciCapAbstractsOCR0350K", num_proc  = 4, split = 'train[20%:]')
 dataset_non_empty_mention = dataset.filter(lambda item: len(item['first_mention']) > 10, num_proc  = 4)
 
-first_10_percent_train = dataset_non_empty_mention.map(lambda example: return_palm(example), num_proc = 4)
-first_10_percent_train.save_to_disk('with_abstract_train_one_percent')
+first_10_percent_train = dataset_non_empty_mention.map(lambda example: return_palm(example), num_proc = 12)
+first_10_percent_train.save_to_disk('with_abstract_20_percent_to_100_percent')

@@ -13,6 +13,7 @@ dist
 !**/alpaca-data-conversation.json
 
 # Editor
+*.arrow
 .idea
 *.swp
 

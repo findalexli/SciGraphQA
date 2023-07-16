@@ -35,5 +35,5 @@ def return_palm(example):
 dataset = load_dataset("alexshengzhili/SciCapAbstractsOCR0350K", num_proc  = 4, split = 'train[-30%:-10%]')
 dataset_non_empty_mention = dataset.filter(lambda item: len(item['first_mention']) > 10, num_proc  = 4)
 
-lastthirty_to_last_ten = dataset_non_empty_mention.map(return_palm, num_proc=12)
-lastthirty_to_last_ten.save_to_disk('with_abstract_graph_derived_question_last_30percent_tolast10_train')
+with_abstract_graph_derived_question_last_30percent_tolast10_train = dataset_non_empty_mention.map(return_palm, num_proc=12)
+with_abstract_graph_derived_question_last_30percent_tolast10_train.save_to_disk('with_abstract_graph_derived_question_last_30percent_tolast10_train')
