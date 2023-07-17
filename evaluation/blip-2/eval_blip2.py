@@ -3,7 +3,7 @@ from transformers import AutoProcessor, Blip2ForConditionalGeneration
 import torch
 from PIL import Image
 
-vali_dataset = load_dataset('alexshengzhili/SciCapInstructed-graph-only-qa', split='1_percent_as_validation[:100]')
+vali_dataset = load_dataset('alexshengzhili/SciCapInstructed-graph-only-qa', split='1_percent_as_validation')
 data = vali_dataset.filter(lambda x: x['q_a_pairs'] is not None and len(x['q_a_pairs']) > 0)
 
 
@@ -37,4 +37,4 @@ for example in tqdm(data):
     response_model.append(generated_text)
 
 new_data = data.add_column('response_BLIP2', response_model)
-new_data.save_to_disk('1_percent_as_validation_blip[:100]')
+new_data.save_to_disk('1_percent_as_validation_blip')
