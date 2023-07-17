@@ -1,6 +1,7 @@
 from datasets import load_dataset
 import json
-data = load_dataset('alexshengzhili/SciCapInstructed-graph-only-qa', split = '1_percent_as_validation')
+data = load_dataset('alexshengzhili/SciCapInstructed-graph-only-qa', split = '1_percent_as_validation[:100]')
+valid = data.filter(lambda example: len(example['q_a_pairs']) > 0)
 
 
 def get_input(example):
