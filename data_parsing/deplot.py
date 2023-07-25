@@ -9,6 +9,8 @@ from datasets import load_dataset, load_from_disk
 from typing import Dict, List
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 model = Pix2StructForConditionalGeneration.from_pretrained('google/deplot').to(device)
+model = torch.compile(model, mode="reduce-overhead")
+model.eval()
 processor = Pix2StructProcessor.from_pretrained('google/deplot')
 
 vali_dataset = load_dataset('alexshengzhili/SciCapInstructed-graph-only-qa', split='1_percent_as_validation')
