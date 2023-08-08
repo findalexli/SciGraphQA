@@ -21,10 +21,10 @@ segmentation mask tokens and leveraging larger LLM backbones coupled with emerge
 techniques. 
 
 [[Arxiv paper](https://arxiv.org/abs/2308.03349)]
-[[Gradio Interactive Demo](https://llava-graph.alexli.me/)]
 [[Training Dataset](https://huggingface.co/datasets/alexshengzhili/SciGraphQA-295K-train/edit/main/README.md)]
 [[Test Dataset](https://huggingface.co/datasets/alexshengzhili/SciCapInstructed-graph-only-qa)]
 [[Model](https://huggingface.co/alexshengzhili/SciGraph-100-percent-further-ft-60k-interleaf-lora-merged)]
+[[PaperWithCode Benchmark](https://paperswithcode.com/dataset/scigraphqa)]
 ```
 @misc{li2023scigraphqa,
   title={SciGraphQA: A Large-Scale Synthetic Multi-Turn Question-Answering Dataset for Scientific Graphs}, 
