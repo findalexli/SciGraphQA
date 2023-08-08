@@ -1,23 +1,44 @@
-# 🌋 LLaVA-Graph: Context-prompted vision-language assistant for explaining scientific graphs
-*TLDR: We re-formulate the image-caption-generation problem as a context-prompted 'explanation' generation problem, which aligns the model's output given (graph, caption) to its first mentioned paragraph. We trained a linear projector from Clip-Vit-Large vision tokens to align with Vicuna-7b, using 5X more tokens compared to the original LLaVa vision text based on 390K Arxiv graph-caption-paragraph samples, then fine-tune Vicuna using GPT-4 instructed dataset. *
-
-[[Gradio Interactive Demo](https://llava-graph.alexli.me/)]  [[Dataset](https://huggingface.co/datasets/alexshengzhili/LLAVA-graph-OCRCleaned)] [[Model](https://huggingface.co/alexshengzhili/Llava-Graph-ocr-ft-on-instruct150k)]
+# A Large-Scale Synthetic Multi-Turn Question-Answering Dataset for Scientific Graphs
 
 
-## Main Contribution of LLaVA-Graph from LLaVa
-- **Caption as context, not as prediction target**. 
-    One-third of captions in SciCap are single-sentence (Hsu et al.2023) Many are incomplete sentences(i.e.  "Vary number of objects') or consist of single/multiple Nouns ('IIPS', 'Average Travel Time'). Efforts to predict captions from images have not been successful, despite attempts to contextualize the model (Yang, 2023). We theorized that captions are instead excellent prompts to the Large Vision-Language Models. 
-- **OCR as additional context (optional)**. 
-    ["On the Hidden Mystery of OCR in Large Multimodal Models"](https://arxiv.org/abs/2305.07895) shows that even the most powerful large multimodal models cannot match expert OCR models by a large margin. Zero-shot text recognition results range  from 37-61% compared to Supervised SOTA of 85%. This deficiency is particularly detrimental to science graphs where text and their location are much more important for humans to read and understand. We added extracted text and bounding boxes when text is detected in figures as part of the contextual prompt. 
-- **Paragraph as alignment target given above context**. 
-    First-paragraphs that mentioned the figure are significantly more informative and carry descriptive and logical explanations, which we hypothesized to aid as ground truth in instructing the LMM to assist users in understanding graphs via Chat. LLaVA-receipt has two steps: 1. (image, caption) feature alignment which is to train a vision token projector into the language token space, pretraining on filtered 590K images with short captions . 2 (image, ground truth bounding box, GPT-4 rewritten multi-turn conversation) for visual instruction tuning. We **switched the first step of feature alignment using the proposed stronger signal between (image, short academic caption, ocr extracted token) and (first mentioned paragraph)**. Our training dataset is constructed using SciCap from 290K papers published on Arxiv on topics of CS and ML. Our training corpse [[Data]([https://github.com/findalexli/LLaVA-Graph](https://huggingface.co/datasets/alexshengzhili/LLAVA-graph-OCRCleaned))] is 5X larger than LLaVa pre-training dataset (LiON-CC-590K) 
+In this work, we present SciGraphQA, a synthetic multi-turn question-answer dataset related to
+academic graphs. SciGraphQA is 13 times larger than ChartVQA, the previously largest chart-visual
+question-answering dataset. It is also the largest open-sourced chart VQA dataset with non-synthetic
+charts. To build our dataset, we selected 290,000 Computer Science or Machine Learning ArXiv
+papers published between 2010 and 2020, and then used Palm-2 to generate 295K samples of open-
+vocabulary multi-turn question-answering dialogues about the graphs. As context, we provided the
+text-only Palm-2 with paper title, abstract, paragraph mentioning the graph, and rich text contextual
+data from the graph itself, obtaining dialogues with an average 2.23 question-answer turns for each
+graph. We asked GPT-4 to assess the matching quality of our question-answer turns given the paper’s
+context, obtaining an average rating of 8.7/10 on our 3K test set.
+We evaluated the 0-shot capability of the most popular MLLM models such as LLaVa, mPLUGowl,
+BLIP-2, and openFlamingo’s on our dataset, finding LLaVA-13B being the most performant with a
+CIDEr score of 0.08. We further enriched the question prompts for LLAVA by including the serialized
+data tables extracted from the graphs using the DePlot model, boosting LLaVA’s 0-shot CIDEr to
+0.15. To verify the validity of our dataset, we also fine-tuned LLaVa using our dataset, reaching a
+substantially higher CIDEr score of 0.26. We anticipate further accuracy improvement by including
+segmentation mask tokens and leveraging larger LLM backbones coupled with emergent prompting
+techniques. 
+
+[[Arxiv paper](https://arxiv.org/abs/2308.03349)]
+[[Gradio Interactive Demo](https://llava-graph.alexli.me/)]
+[[Training Dataset](https://huggingface.co/datasets/alexshengzhili/SciGraphQA-295K-train/edit/main/README.md)]
+[[Test Dataset](https://huggingface.co/datasets/alexshengzhili/SciCapInstructed-graph-only-qa)]
+[[Model](https://huggingface.co/alexshengzhili/SciGraph-100-percent-further-ft-60k-interleaf-lora-merged)]
+```
+@misc{li2023scigraphqa,
+  title={SciGraphQA: A Large-Scale Synthetic Multi-Turn Question-Answering Dataset for Scientific Graphs}, 
+  author={Shengzhi Li and Nima Tajbakhsh},
+  year={2023},
+  eprint={2308.03349},
+  archivePrefix={arXiv},
+  primaryClass={cs.CL}
+}
+```
+
+**Usage and License Notices**: The data, code and checkpoint is intended and licensed for research use only. They are also restricted to uses that follow the license agreement of Palm-2, LLaMA and GPT-4. If you find our work useful, please consider citing us using
 
 
-![Screenshot 2023-06-28 at 3 41 49 PM](https://github.com/findalexli/LLaVA-Graph/assets/11794421/3f515b0d-813e-4c56-af85-a2173873fb3b)
-![Screenshot 2023-06-28 at 3 47 08 PM](https://github.com/findalexli/LLaVA-Graph/assets/11794421/018e288a-b98c-4cf2-a281-c1ca4133998a)
-
-
-**Usage and License Notices**: The data, code and checkpoint is intended and licensed for research use only. They are also restricted to uses that follow the license agreement of LLaMA, Vicuna and GPT-4. The dataset is CC BY NC 4.0 (allowing only non-commercial use) and models trained using the dataset should not be used outside of research purposes.
 
 
 ## Contents
@@ -32,17 +53,42 @@
 
 | Data file name | Size |
 | --- | ---: |
-| [[SciCapPlus390K](https://huggingface.co/datasets/alexshengzhili/LLAVA-graph-OCRCleaned)] | 935 MB
-| [llava_instruct_150k.json](https://huggingface.co/datasets/liuhaotian/LLaVA-Instruct-150K/raw/main/llava_instruct_150k.json) | 229 MB |
+| [[SciGraphQA-295K](https://huggingface.co/datasets/alexshengzhili/SciGraphQA-295K-train/edit/main/README.md)] | 771 MB (excluding images)
+| [[SciGraphQA-3K-test](https://huggingface.co/datasets/alexshengzhili/SciCapQA-test-with-deplot)] | 8.4 MB (excluding images)
+| [[SciGraphQA-30K-DePlot-augmented-subset](https://huggingface.co/datasets/alexshengzhili/SciCaptrain_10k-40k_deplot_conversations)] | 8.4 MB (excluding images)
+### Related datasets
+| Datasets | Figure Count | Data/Chart generation process | Question-Answer pair count | Question generation | Answer Type | # Plot types |
+| --- | --- | --- | --- | --- | --- | --- |
+| FigureQA (Kahou et al. 2017) | 180K | Synthetic data and charts | 2.3M | From 15 templates | Fixed voca. | 4 |
+| DVQA (Kafle et al. 2018) | 300K | Synthetic data and synthetic charts | 3.4M | From 26 templates | Fixed vocab. | 1 |
+| PlotQA (Methani et al. 2020) | 224K | Real-world data and synthetic charts | 28M | From 76 templates | Mix of fixed and open vocabulary answers. | 3 |
+| ChartQA (Masry et al. 2022) | 21.9K (4.8K human and 17.1K generated) | Real-world charts from a web crawl | 32.7K (9.6K human and 23.1k generated) | Human/Machine generated | Open Vocabulary | Unbounded (real-world charts) |
+| SciGraphQA (ours) | 295K | Real-world academic graphs | 657K | Machine Generated with Palm with additional textual context | Open Vocabulary | Unbounded (real-world charts) |
 
-### Pretraining Dataset
-The pretraining dataset used in this release is from the SciCap dataset. SCICAP is a large-scale image captioning dataset that contains real-world scientific figures and captions. SCICAP was constructed using more than two million images from over 290,000 papers collected and released by arXiv.Homepage. The papers are filtered as 2010-2020 compuer science and machine learning papers. Hsu, Giles, and Huang (2021) show that text normalizationand figure filtering do not improve model performance.
-In all three splits, around 90% of the captions are less than 66 words.Out of 2.1 million figures, Only graph figures are considered. Ohther formats such as tables, euqaitions, flowcharts, scatter plots and bar charts are not considered.  Please see here for a visualidation dataset [vis](https://huggingface.co/datasets/alexshengzhili/llava-graph-caption2mentioned-vis)
+### Generation process
 
+<img src="images/generation.png" alt="Alt text" style="width: 100%;" />
+Illustration of multi-turn dialogue generation process. For higher quality dialogues, we use comprehensive textual context together with in-context learning when prompting Palm-2.
 
-The Scicap dataset is transformed into the following single turn conversation: Xc Xq Xv<STOP>nn Assistant : Xm<STOP>nn, 
-where Xc are context tokens (from caption and ocr-extract text), Xq is randomly selected question prompt are , Xv is image tokens, and Xm is mentioned paragraph. 
+<img src="images/histogram.png" alt="Alt text" style="width: 100%;" />
+(left) distribution of the number of question-answer turns in our SciGraphQA dataset. (right) distribution of GPT-4 ratings (0--10) when GPT-4 was used as a judge to measure the matching of questions and answers from a 3k subset of the the SciGraphQA dataset.
 
+<img src="images/examples.png" alt="Alt text" style="width: 100%;" />
+Examples from our SciGraphQA dataset where questions and answers are both generated using a commercial LLM rather than being selected from a fixed, limited template pool. Note how the questions are specific to the graphs and often have a conversational nature, asking to elaborate on a concept mentioned in previous answer. For brevity, some answers are truncated, denoted by ``...`` at the end.
+
+## Leaderboard 
+
+| Model Name | Finetuned on SciGraphQA? | Prompt Augmented with extracted data-table | CIDEr | BLEU(4) | ROUGE |
+| --- | --- | --- | --- | --- | --- |
+| BLIP2-2.7B | No | No | 0.007 | 0.003 | 0.1 |
+| DePlot+mPLUG-owl-7B | No | Yes | 0.037 | 0.058 | 0.22 |
+| mPLUG-owl-7B | No | No | 0.04 | 0.062 | 0.22 |
+| LLaVa-7B | No | No | 0.048 | 0.07 | 0.18 |
+| LLaVa-13B | No | No | 0.08 | 0.07 | 0.23 |
+| OpenFlamingo v2-7B | No | No | 0.12 | 0.081 | 0.22 |
+| DePlot+GPT-3 | No | Yes | 0.13 | 0.098 | 0.226 |
+| DePlot+LLaVa-13B | No | Yes | 0.153 | 0.106 | 0.273 |
+| DePlot+SciGrahQA-baseline | Yes | Yes | **0.268** | **0.123** | **0.31** |
 ## Install
 
 1. Clone this repository and navigate to LLaVA folder
@@ -111,8 +157,6 @@ python -m llava.serve.gradio_web_server --controller http://localhost:10000
 
 
 
-## Evaluation
-[WIP]
 
 
 
