@@ -39,7 +39,9 @@ techniques.
 **Usage and License Notices**: The data, code and checkpoint is intended and licensed for research use only. They are also restricted to uses that follow the license agreement of Palm-2, LLaMA and GPT-4. If you find our work useful, please consider citing us using
 
 
+## Updates
 
+[Oct 2024] We are updating the dataset with higher quality and grounded on input images, using MMLM as input instead of using text only llm. Stay tuned! 
 
 ## Contents
 - [Data Download](#data-download)
